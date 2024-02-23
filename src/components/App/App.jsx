@@ -1,24 +1,53 @@
-// import css from './App.module.css'
+import css from './App.module.css'
 import ContactList from '../ContactList/ContactList';
+import SearchBox from '../SearchBox/SearchBox';
+import ContactForm from '../ContactForm/ContactForm';
+import { useState, useEffect } from 'react';
 import 'modern-normalize';
 
 
+const STG_KEY = "CONTACTS";
+
+const getFromStorage = (key) => {
+  const contacts = localStorage.getItem(key);
+  return JSON.parse(contacts) ? JSON.parse(contacts): [];
+}
+
+const writeToStorage = (key, contacts) => {
+  localStorage.setItem(key, JSON.stringify(contacts))
+}
+
 
 export default function App() {
-  const contactss = [
-  { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-  { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-  { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-  { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-];
-console.log(contactss)
+  const [filter, setFilter] = useState('');
+  const [contacts, setContacts] = useState(getFromStorage(STG_KEY));
+
+  useEffect(() => {
+    writeToStorage(STG_KEY, contacts);
+  }, [contacts]);
+
+  const handleAdd = (newContact) => {
+    setContacts([
+      ...contacts,
+      newContact
+    ])
+  }
+
+  const handleDelete = (id) => {
+    const newList = contacts.filter((contact) => contact.id !== id);
+    setContacts(newList)
+  }
+
+  const filteredContacts = contacts.filter((contact) => { console.log(contact);  return contact.name.toLowerCase().includes(filter.toLowerCase())})
 
   return (
-   <div>
+   <div className={css.container}>
       <h1>Phonebook</h1>
-      <ContactList contacts={contactss} />
+      <ContactForm onAdd = {handleAdd} />
+      <SearchBox value={ filter } onFilter={setFilter}/>
+      <ContactList contacts={filteredContacts} onDelete={handleDelete} />
 
-</div>
+    </div>
   )
 }
 

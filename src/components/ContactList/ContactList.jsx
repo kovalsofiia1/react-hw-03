@@ -1,15 +1,15 @@
 import css from './ContactList.module.css';
 import Contact from '../Contact/Contact';
 
-export default function ContactList({ contacts }) {
+export default function ContactList({ contacts, onDelete }) {
     console.log(contacts)
     return (
         <ul className={css.list}>
-            {contacts.map((contact) => (
+            {contacts.length>0 ? (contacts.map((contact) => (
                 <li key={contact.id}>
-                    <Contact data={contact} />
+                    <Contact data={contact} onDelete = {onDelete} />
                 </li>
-            ))}
+            ))) : <p className={css.noContacts}>No contacts!</p>}
         </ul>
     );
 }

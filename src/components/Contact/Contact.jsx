@@ -3,7 +3,7 @@ import { IoPerson } from "react-icons/io5";
 
 import css from './Contact.module.css'
 
-export default function Contact({ data }) {
+export default function Contact({ data, onDelete }) {
     console.log(data.name, data.number, data.id)
     return (
         <div className={css.contact}>
@@ -17,7 +17,7 @@ export default function Contact({ data }) {
                     <p className={css.text}>{ data.number }</p>
                 </div>
             </div>
-            <button >Delete</button>
+            <button onClick = {() => onDelete(data.id)}>Delete</button>
         </div>
 
     )
