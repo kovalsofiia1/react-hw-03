@@ -38,7 +38,7 @@ export default function App() {
     setContacts(newList)
   }
 
-  const filteredContacts = contacts.filter((contact) => { console.log(contact);  return contact.name.toLowerCase().includes(filter.toLowerCase())})
+  const filteredContacts = contacts.filter((contact) => { return contact.name.toLowerCase().includes(filter.toLowerCase())})
 
   return (
    <div className={css.container}>

@@ -4,7 +4,6 @@ import { IoPerson } from "react-icons/io5";
 import css from './Contact.module.css'
 
 export default function Contact({ data, onDelete }) {
-    console.log(data.name, data.number, data.id)
     return (
         <div className={css.contact}>
             <div className={css.info}>
